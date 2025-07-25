@@ -1,29 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"io"
+	"groupie-tracker/internal/handler"
 	"log"
 	"net/http"
-	"os"
 )
 
 func main() {
 
-	response, err := http.Get("http://pokeapi.co/api/v2/pokedex/kanto/")
+	http.HandleFunc("/", handler.HomeHandler)
 
-	if err != nil {
-		fmt.Println("Error fetching:", err)
-		os.Exit(1)
-
-	}
-	defer response.Body.Close()
-
-	reponseData, err := io.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(reponseData))
+	log.Println("SERVER IS RUNNING ON http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }
