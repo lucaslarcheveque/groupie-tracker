@@ -9,8 +9,10 @@ import (
 func main() {
 
 	http.HandleFunc("/", handler.HomeHandler)
+	http.Handle("/web/assets/", http.StripPrefix("/web/assets/", http.FileServer(http.Dir("web/assets"))))
 
 	log.Println("SERVER IS RUNNING ON http://localhost:8080")
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }
