@@ -78,6 +78,10 @@ body {
     padding: 0;
 }
 
+.artist-list li {
+    display: contents;
+}
+
 /* ===== ARTIST CARDS ===== */
 .artist-card {
     background: #111111;

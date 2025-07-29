@@ -19,16 +19,19 @@
             </form>
         </div>
         
-        <ul class="artist-list">
-            {{range .}}
-            <li class="artist-card">
-                <div class="image-wrapper">
-                    <img src="{{.Image}}" alt="{{.Name}}" loading="lazy">
-                </div>
-                <h3 class="artist-name">{{.Name}}</h3>
-            </li>
-            {{end}}
-        </ul>
+  <ul class="artist-list">
+    {{range .}}
+    <li>
+        <a href="/artist/{{.ID}}" class="artist-card">
+            <div class="image-wrapper">
+                <img src="{{.Image}}" alt="{{.Name}}" loading="lazy">
+            </div>
+            <h3 class="artist-name">{{.Name}}</h3>
+        </a>
+    </li>
+    {{end}}
+</ul>
+
     </div>
 </body>
 </html>
