@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -26,4 +28,33 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("Template execution error", err)
 		return
 	}
+}
+
+func ArtistHandler(w http.ResponseWriter, r *http.Request) {
+
+	idStr := strings.TrimPrefix(r.URL.Path, "/artist/")
+	id, _ := strconv.Atoi(idStr)
+
+	data, err := api.FetchArtists()
+	if err != nil {
+		http.Error(w, "Failed to fetch artist", 500)
+		return
+	}
+
+	artists, err := api.ParseArtists(data)
+	if err != nil {
+		http.Error(w, "Failed to parse artists", 500)
+		return
+	}
+
+	for _, artist := range artists {
+		if artist.ID == id {
+			tmpl := template.Must(template.ParseFiles("web/artist.html"))
+			tmpl.Execute(w, artist)
+			return
+		}
+	}
+
+	http.NotFound(w, r)
+
 }
