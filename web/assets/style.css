@@ -1,269 +1,374 @@
-/* ===== RESET & BASE STYLES ===== */
+/* Reset et variables CSS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --dark-bg: #1a1a2e;
+    --darker-bg: #16213e;
+    --text-light: #ffffff;
+    --text-muted: #b8b8d1;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.12);
+    --shadow-primary: 0 8px 32px rgba(102, 126, 234, 0.3);
+    --shadow-hover: 0 12px 48px rgba(102, 126, 234, 0.4);
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Corps et conteneur principal */
 body {
     font-family: 'Lexend Zetta', sans-serif;
-    background: #0a0a0a;
+    background: var(--dark-bg);
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
     min-height: 100vh;
-    color: #ffffff;
+    color: var(--text-light);
+    overflow-x: hidden;
+    position: relative;
 }
 
-/* ===== MAIN CONTAINER ===== */
+/* Animation de fond musicale */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.01) 2px,
+            rgba(255, 255, 255, 0.01) 4px
+        );
+    animation: musicWave 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes musicWave {
+    0%, 100% { opacity: 0.3; transform: translateX(0); }
+    50% { opacity: 0.6; transform: translateX(20px); }
+}
+
 .main-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 50px 20px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
 }
 
-/* ===== TITLE SECTION ===== */
+/* Titre principal */
 .main-title {
-    text-align: center;
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 900;
+    text-align: center;
     background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 50%, #ff6b6b 100%);
-    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 50px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    background-clip: text;
+    margin-bottom: 3rem;
+    letter-spacing: 0.1em;
+    position: relative;
+    animation: titlePulse 4s ease-in-out infinite;
 }
 
-/* ===== SEARCH SECTION ===== */
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+    animation: underlineGlow 3s ease-in-out infinite;
+}
+
+@keyframes underlineGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(79, 172, 254, 0.5); }
+    50% { box-shadow: 0 0 25px rgba(79, 172, 254, 0.8); }
+}
+
+/* Section de recherche */
 .search-section {
+    margin-bottom: 4rem;
     display: flex;
     justify-content: center;
-    margin-bottom: 60px;
 }
 
 .search-section form {
     width: 100%;
-    max-width: 650px;
+    max-width: 500px;
     position: relative;
 }
 
 .search-bar {
     width: 100%;
-    padding: 18px 24px;
+    padding: 1.2rem 2rem;
     font-size: 1.1rem;
-    border: 2px solid #1a1a1a;
-    border-radius: 12px;
-    background: #111111;
-    color: #ffffff;
-    transition: all 0.3s ease;
-    outline: none;
     font-family: inherit;
+    font-weight: 400;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--card-border);
+    border-radius: var(--border-radius);
+    color: var(--text-light);
+    outline: none;
+    transition: var(--transition);
+    box-shadow: var(--shadow-primary);
 }
 
 .search-bar::placeholder {
-    color: #666666;
+    color: var(--text-muted);
 }
 
 .search-bar:focus {
-    border-color: #00d4ff;
-    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
-    background: #151515;
+    border-color: rgba(102, 126, 234, 0.6);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
 }
 
-/* ===== ARTIST LIST ===== */
+/* Liste des artistes */
 .artist-list {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    padding: 0;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .artist-list li {
-    display: contents;
+    transform: translateY(0);
+    transition: var(--transition);
 }
 
-/* ===== ARTIST CARDS ===== */
 .artist-card {
-    background: #111111;
-    border: 1px solid #222222;
-    border-radius: 16px;
-    padding: 0;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow-primary);
     position: relative;
+    overflow: hidden;
 }
 
 .artist-card::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-gradient);
     opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1;
-}
-
-.artist-card:hover {
-    transform: translateY(-5px);
-    border-color: #00d4ff;
-    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+    transition: var(--transition);
+    z-index: -1;
 }
 
 .artist-card:hover::before {
-    opacity: 1;
+    left: 0;
+    opacity: 0.1;
 }
 
-/* ===== IMAGE SECTION ===== */
+.artist-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(102, 126, 234, 0.4);
+}
+
+/* Wrapper d'image */
 .image-wrapper {
+    position: relative;
     width: 100%;
     height: 250px;
+    border-radius: calc(var(--border-radius) - 4px);
     overflow: hidden;
-    background: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 1.5rem;
+    background: var(--darker-bg);
+}
+
+.image-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: var(--transition);
+    mix-blend-mode: overlay;
+}
+
+.artist-card:hover .image-wrapper::after {
+    opacity: 0.3;
 }
 
 .image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
-    filter: brightness(0.9);
+    transition: var(--transition);
 }
 
 .artist-card:hover .image-wrapper img {
-    transform: scale(1.08);
-    filter: brightness(1);
+    transform: scale(1.1);
 }
 
-/* Fallback for missing images */
-.image-wrapper::after {
-    content: '';
-    font-size: 4rem;
-    position: absolute;
-    color: #666666;
-    z-index: 1;
-}
-
-/* ===== ARTIST NAME ===== */
+/* Nom de l'artiste */
 .artist-name {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #ffffff;
     text-align: center;
-    line-height: 1.3;
     margin: 0;
-    padding: 20px;
-    position: relative;
-    z-index: 2;
-    background: linear-gradient(135deg, #00d4ff, #8b5cf6);
-    background-clip: text;
+    background: var(--primary-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: all 0.3s ease;
+    background-clip: text;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .artist-card:hover .artist-name {
-    transform: translateY(-2px);
+    transform: scale(1.05);
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
+/* Effets de particules musicales */
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.main-container::before {
+    content: '♪ ♫ ♪ ♫ ♪';
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.main-container::after {
+    content: '♫ ♪ ♫ ♪ ♫';
+    position: absolute;
+    top: 15%;
+    right: 5%;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 8s ease-in-out infinite reverse;
+    pointer-events: none;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .main-container {
-        padding: 40px 15px;
+        padding: 1rem;
     }
-
+    
     .main-title {
-        margin-bottom: 40px;
-        letter-spacing: 1px;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
     }
-
+    
     .search-section {
-        margin-bottom: 50px;
+        margin-bottom: 2rem;
     }
-
+    
     .search-bar {
-        padding: 16px 20px;
+        padding: 1rem 1.5rem;
         font-size: 1rem;
     }
-
+    
     .artist-list {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
     }
-
+    
     .image-wrapper {
-        height: 220px;
+        height: 200px;
     }
-
+    
     .artist-name {
-        font-size: 1.2rem;
-        padding: 18px;
+        font-size: 1.1rem;
     }
 }
 
 @media (max-width: 480px) {
     .artist-list {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 1rem;
     }
-
+    
     .image-wrapper {
-        height: 200px;
-    }
-
-    .artist-name {
-        font-size: 1.1rem;
-        padding: 16px;
+        height: 180px;
     }
 }
 
-/* ===== LOADING STATES ===== */
-.image-wrapper img {
-    opacity: 0;
-    transition: opacity 0.4s ease;
+/* Animations d'apparition */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.image-wrapper img[src] {
-    opacity: 1;
+.artist-list li {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
 }
 
-/* ===== ACCESSIBILITY ===== */
-.artist-card:focus {
-    outline: 2px solid #00d4ff;
-    outline-offset: 2px;
+.artist-list li:nth-child(1) { animation-delay: 0.1s; }
+.artist-list li:nth-child(2) { animation-delay: 0.2s; }
+.artist-list li:nth-child(3) { animation-delay: 0.3s; }
+.artist-list li:nth-child(4) { animation-delay: 0.4s; }
+.artist-list li:nth-child(5) { animation-delay: 0.5s; }
+.artist-list li:nth-child(6) { animation-delay: 0.6s; }
+
+/* Effet de scan musical */
+@keyframes musicScan {
+    0% { transform: translateX(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
 }
 
-.search-bar:focus {
-    outline: none;
-}
-
-/* ===== SMOOTH SCROLLING ===== */
-html {
-    scroll-behavior: smooth;
-}
-
-/* ===== CUSTOM SCROLLBAR ===== */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #111111;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #333333;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #00d4ff;
+.artist-card:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: musicScan 1.5s ease-in-out;
+    pointer-events: none;
 }
