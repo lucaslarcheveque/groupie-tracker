@@ -91,24 +91,7 @@ body::before {
     }
 }
 
-/* Effet de brillance sur le conteneur */
-.main-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: var(--secondary-gradient);
-    opacity: 0.05;
-    animation: shimmer 4s ease-in-out infinite;
-    z-index: -1;
-}
 
-@keyframes shimmer {
-    0%, 100% { left: -100%; }
-    50% { left: 100%; }
-}
 
 /* Titre principal - même style que l'accueil */
 .main-title {
@@ -256,7 +239,7 @@ p:hover {
     font-family: inherit;
     text-decoration: none;
     color: var(--text-light);
-    background: var(--card-bg);
+    background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 50%, #ff6b6b 100%);
     backdrop-filter: blur(20px);
     border: 2px solid var(--card-border);
     border-radius: var(--border-radius);
@@ -314,7 +297,7 @@ p:hover {
 
 /* Particules musicales spécifiques à la page détail */
 .main-container::after {
-    content: '♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫';
+    content: '♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪';
     position: absolute;
     top: -20px;
     left: 0;
