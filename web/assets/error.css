@@ -1,0 +1,439 @@
+/* Reset et variables CSS - Charte graphique identique */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --error-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 50%, #ff4757 100%);
+    --dark-bg: #1a1a2e;
+    --darker-bg: #16213e;
+    --text-light: #ffffff;
+    --text-muted: #b8b8d1;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.12);
+    --shadow-primary: 0 8px 32px rgba(102, 126, 234, 0.3);
+    --shadow-hover: 0 12px 48px rgba(102, 126, 234, 0.4);
+    --shadow-error: 0 8px 32px rgba(255, 107, 107, 0.3);
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Corps et conteneur principal */
+body {
+    font-family: 'Lexend Zetta', sans-serif;
+    background: var(--dark-bg);
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+    min-height: 100vh;
+    color: var(--text-light);
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* Animation de fond musicale identique */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.01) 2px,
+            rgba(255, 255, 255, 0.01) 4px
+        );
+    animation: musicWave 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes musicWave {
+    0%, 100% { opacity: 0.3; transform: translateX(0); }
+    50% { opacity: 0.6; transform: translateX(20px); }
+}
+
+.main-container {
+    max-width: 600px;
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    box-shadow: var(--shadow-error);
+    position: relative;
+    text-align: center;
+    animation: errorBounce 0.8s ease-out;
+    overflow: hidden;
+}
+
+@keyframes errorBounce {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Titre principal (code d'erreur) */
+.main-title {
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 900;
+    text-align: center;
+    background: var(--error-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+    position: relative;
+    animation: errorPulse 3s ease-in-out infinite;
+    text-transform: uppercase;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+}
+
+@keyframes errorPulse {
+    0%, 100% { 
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% { 
+        transform: scale(1.03);
+        filter: brightness(1.1);
+    }
+}
+
+.main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: var(--error-gradient);
+    border-radius: 2px;
+    animation: errorGlow 2s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+}
+
+@keyframes errorGlow {
+    0%, 100% { 
+        opacity: 0.7;
+        box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+    }
+    50% { 
+        opacity: 1;
+        box-shadow: 0 0 25px rgba(255, 107, 107, 0.9);
+    }
+}
+
+/* Message d'erreur */
+.error-message {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 2.5rem 0;
+    color: var(--text-light);
+    line-height: 1.6;
+    position: relative;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: calc(var(--border-radius) / 2);
+    border: 2px solid rgba(255, 107, 107, 0.3);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    animation: messageSlide 0.6s ease-out 0.3s both;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-message::before {
+    content: '';
+    font-size: 1.8rem;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-bg);
+    padding: 0 1rem;
+    animation: warningBlink 2s ease-in-out infinite;
+}
+
+@keyframes warningBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.error-message:hover {
+    background: rgba(255, 107, 107, 0.15);
+    border-color: rgba(255, 107, 107, 0.5);
+    transform: scale(1.02);
+}
+
+/* Bouton de retour à l'accueil */
+.back-home {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: inherit;
+    text-decoration: none;
+    color: var(--text-light);
+    background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 50%, #ff6b6b 100%);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--card-border);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-primary);
+    animation: buttonSlide 0.6s ease-out 0.6s both;
+}
+
+@keyframes buttonSlide {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.back-home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-gradient);
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.back-home:hover::before {
+    left: 0;
+}
+
+.back-home:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(79, 172, 254, 0.6);
+    color: var(--text-light);
+}
+
+.back-home::after {
+    content: ' 🏠';
+    transition: var(--transition);
+    font-size: 1.2rem;
+}
+
+.back-home:hover::after {
+    transform: scale(1.2);
+}
+
+/* Particules d'erreur musicales */
+.main-container::before {
+    content: '♪ ❌ ♫ ❌ ♪ ❌ ♫ ❌';
+    position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
+    font-size: 1.2rem;
+    color: rgba(255, 107, 107, 0.2);
+    animation: errorMusicFlow 12s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+    letter-spacing: 2rem;
+}
+
+@keyframes errorMusicFlow {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Effet de glitch sur le conteneur */
+.main-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+    opacity: 0;
+    animation: glitchScan 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glitchScan {
+    0%, 90%, 100% { 
+        opacity: 0;
+        transform: translateX(-100%) skewX(0deg);
+    }
+    5%, 15% { 
+        opacity: 0.3;
+        transform: translateX(100%) skewX(-10deg);
+    }
+}
+
+/* Effet de tremblement léger */
+@keyframes subtleShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-1px); }
+    75% { transform: translateX(1px); }
+}
+
+.main-container:hover {
+    animation: subtleShake 0.5s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    
+    .main-container {
+        padding: 2rem;
+        margin: 1rem 0;
+    }
+    
+    .main-title {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .error-message {
+        font-size: 1.1rem;
+        margin: 2rem 0;
+        padding: 1.2rem 1.5rem;
+    }
+    
+    .back-home {
+        padding: 1rem 2.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        padding: 1.5rem;
+    }
+    
+    .main-title {
+        font-size: 3rem;
+        letter-spacing: 0.05em;
+    }
+    
+    .error-message {
+        font-size: 1rem;
+        padding: 1rem 1.2rem;
+        margin: 1.5rem 0;
+    }
+    
+    .back-home {
+        padding: 0.9rem 2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Effet de scan musical au chargement */
+@keyframes initialErrorScan {
+    0% { 
+        transform: translateX(-100%) skewX(-45deg); 
+        opacity: 0;
+        background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.3), transparent);
+    }
+    50% { 
+        opacity: 1;
+    }
+    100% { 
+        transform: translateX(200%) skewX(-45deg); 
+        opacity: 0;
+    }
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100vh;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.2), transparent);
+    animation: initialErrorScan 2s ease-in-out 0.5s;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Animation des notes musicales flottantes en arrière-plan */
+.main-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Particules flottantes d'erreur */
+@keyframes floatError {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+        opacity: 0.3;
+    }
+    50% { 
+        transform: translateY(-30px) rotate(180deg); 
+        opacity: 0.6;
+    }
+}
+
+body {
+    overflow: hidden;
+}
+
+body:before {
+    content: '♪ ⚠️ ♫ ❌ ♪ ⚠️ ♫';
+    position: fixed;
+    top: 20%;
+    left: -10%;
+    font-size: 1.5rem;
+    color: rgba(255, 107, 107, 0.15);
+    animation: floatError 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
