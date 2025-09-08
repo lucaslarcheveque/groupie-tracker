@@ -84,6 +84,24 @@ body::before {
     animation: titlePulse 4s ease-in-out infinite;
 }
 
+/* >>> Ajout pour rendre le titre cliquable <<< */
+.title-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    padding: 0.3em 0.6em;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.title-link:hover {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: scale(1.05);
+}
+/* >>> Fin ajout <<< */
+
 @keyframes titlePulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.02); }
