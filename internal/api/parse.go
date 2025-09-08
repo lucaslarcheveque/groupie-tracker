@@ -33,10 +33,15 @@ func ParseDate(data []byte) ([]models.Date, error) {
 }
 
 func ParseRelation(data []byte) ([]models.Relation, error) {
-	var relations []models.Relation
-	err := json.Unmarshal(data, &relations)
+	// Wrap the JSON in a struct that matches the API
+	var wrapper struct {
+		Index []models.Relation `json:"index"`
+	}
+
+	err := json.Unmarshal(data, &wrapper)
 	if err != nil {
 		return nil, err
 	}
-	return relations, nil
+
+	return wrapper.Index, nil
 }

@@ -5,17 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/web/assets/artist.css">
-    <title>{{.Name}}</title>
+    <title>{{.Artist.Name}}</title>
 </head>
 <body>
     <div class="main-container">
-        <h1 class="main-title">{{.Name}}</h1>
-        <img src="{{.Image}}" alt="{{.Name}}" class="artist-detail-img">
-        <p>{{range.Members}} {{.}},{{end}}</p>
-        <p>First Album : {{.FirstAlbum}}</p>
-        <p>Creation Date : {{.CreationDate}}</p>
-        <a href="/" class="back-link" >BACK TO LIST</a>
+        <h1 class="main-title">{{.Artist.Name}}</h1>
+        
+        <div class="artist-info">
+            <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" class="artist-detail-img">
+            <p><strong>Members:</strong> {{.MembersString}}</p>
+            <p><strong>First Album:</strong> {{.Artist.FirstAlbum}}</p>
+            <p><strong>Creation Date:</strong> {{.Artist.CreationDate}}</p>
+        </div>
+
+        <div class="tour-section">
+            {{if .Relation.DateLocation}}
+            <h2>Tour Dates & Locations</h2>
+            <ul>
+                {{range $loc, $dates := .Relation.DateLocation}}
+                    <li><strong>{{$loc}}:</strong> {{range $dates}}{{.}} {{end}}</li>
+                {{end}}
+            </ul>
+            {{else}}
+            <p>No relation data available for this artist.</p>
+            {{end}}
+        </div>
+
+        <a href="/" class="back-link">BACK TO LIST</a>
     </div>
 </body>
-
 </html>
